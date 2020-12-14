@@ -1,1 +1,53 @@
+nav {
+  background-color: grey;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
 
+.title {
+  color: white;
+  display: block;
+  padding: 5px;
+}
+
+.navbar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+li a {
+    float: right;
+  display: block;
+  padding: 10px;
+  background-color: #dddddd;
+  text-decoration: none;
+}
+
+.page {
+  margin-top: 90px
+}
+
+.sidebar {
+    float: left;
+    width: 200px;
+}
+
+.sidelist {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: green;
+}
+
+.sidelist li {
+    padding: 10px;
+    margin: black;
+}
+
+.content {
+    margin-left: 220px;
+}
