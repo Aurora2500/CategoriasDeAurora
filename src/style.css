@@ -8,20 +8,27 @@ nav {
 .title {
   color: white;
   display: block;
-  padding: 5px;
+  padding: 15px;
+  width: 200px;
+  float: left;
 }
 
 .navbar {
+  margin-left: 200px;
+  float: right;
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
 }
 
+.navbar li {
+  float: left
+}
+
 li a {
-    float: right;
   display: block;
-  padding: 10px;
+  padding: 15px;
   background-color: #dddddd;
   text-decoration: none;
 }
