@@ -150,6 +150,39 @@
         <p>
           Así, <code>Predicate Int</code> es una función de un número a un booleano.
         </p>
+        <h2>Data</h2>
+        <p>
+          Con <code>data</code> puedes definir típos de álgebra cualquiera.
+          tal que sean tipos de suma o de producto.
+          Cuando se habla de un típo de suma, esto quiere decir que un valor de este
+          típo puede tener uno de varios diferentes típos.
+          Un ejemplo de esto sería representar las estaciones del año:
+        </p>
+        <pre>
+          <code class="codeblock">
+            data Estacion
+                  = Invierno
+                  | Primavera
+                  | Verano
+                  | Otoño
+          </code>
+        </pre>
+        <p>
+          Ahora, si por ejemplo hay una función que devuelva una <code>Estacion</code>
+          (por ejemplo una que te díce en qué estación está un día del año),
+          Va a devolver uno de los cuatro valores que se han definido, que en este caso
+          son las cuatro estaciones.
+        </p>
+        <p>
+          Por el otro lado, un típo de producto es un típo que tiene varios típos por dentro
+          a la véz. En este ejemplo, se define un típo que representa una persona, con un
+          nombre y una edad:
+        </p>
+        <pre>
+          <code class="codeblock">
+            data Persona = Persona String Int
+          </code>
+        </pre>
       </section>
     </div>
   </div>
