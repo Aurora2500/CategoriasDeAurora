@@ -34,7 +34,8 @@
         <p>
           Antes de continuar, tened en cueneta que no tengo formación profesional respecto
           al tema, y todo mi conocimiento viene de lo que he aprendido a lo largo del
-          tiempo por internét. Con lo que pueden haber algunos detalles equivocados.
+          tiempo por internét y mis experimentaciones.
+          Con lo que pueden haber algunos detalles equivocados.
           Si detectas uno, me puedes contactar para que los arregle.
         </p>
       </section>
@@ -53,17 +54,101 @@
           funciones recursivas. Por ejemplo, esto es un ejemplo de una funcción
           functorial:
         </p>
-        <code>
-          fact :: Int -> Int<br>
-          fact 0 = 1<br>
-          fact n = n * fact (n-1)<br>
-        </code>
+          <pre>
+            <code class="codeblock">
+              fact :: Int -> Int
+              fact 0 = 1
+              fact n = n * fact (n-1)
+            </code>
+          </pre>
         <p>
           Cuando se dice que su evaluación nó es estricta. Esto quiere decir que al
           llamar una función, no se evalua. En véz se espera hasta el último momento
           posible para evaluarlo. Esto tiene varias buenas consequencias. Por ejemplo,
           es posible crear lístas infinitas y trabajar con ellas si al final solo se
-          tomarán un número finito de estas.
+          tomarán un número finito de estas. En este ejemplo, prod es el prodúcto de los
+          primeros 20 números de una lista del 1 al infinito:
+        </p>
+          <pre>
+            <code class="codeblock">
+              prod :: Int
+              prod = product $ take 20 [1..]
+            </code>
+          </pre>
+      </section>
+      <section>
+        <h1>Currying y funciones de mayor orden</h1>
+        <p>
+          Dos elementos de Haskell con los que se vá a trabajar mucho son el concepto de currying y de funciones de mayor orden.
+          Cuando se habla de funciones de mayor orden, se dice que se usan estas como valores para otras funciones.
+          De este modos hay funciones que cogen funciones como un valor, funciones que devuelven funciones, funciones que cogen funciones y las
+          transofman, etc.
+        </p>
+        <p>
+          Mientras que currying es un típo de applicación de funciones de mayor orden.
+          Currying consiste en transofrmar funciones de mayor aridad de 2 a funciones unarias que devuelven otras funciones.
+          Tal que, por ejemplo, una función que añade dos números, solo coge ún número, y devuelve una función que incrementa
+          un número por el argumento dado.
+          En un programa como Python, se parecería algo así:
+        </p>
+        <pre>
+          <code class="codeblock">
+            def suma(x):
+                def f(y):
+                  return x+y
+                return f
+          </code>
+        </pre>
+        <p>
+          Pero en Haskell parecería algo así:
+        </p>
+        <pre>
+          <code class="codeblock">
+            suma :: Int -> Int -> Int
+            suma x y = x+y
+          </code>
+        </pre>
+        <p>
+          Aquí se ven varias cosas. La primera es que haskell utiliza currying por defecto, es decir,
+          practicamente tódas las funciones definidas en haskell son unarias, devolviendo otras funciones.
+          Además se vé como se definen los tipos de funciones. en este caso con <code>Int -> Int -> Int</code>.
+          Una función de un típo a otro se representa como una flecha que va de un típo a otro.
+          Pero cuando hay várias flechas encadenadas de esta manera. Esto implica que hay una associatividád
+          de derecha, es decir, el típo previo es identico a <code>Int -> (Int -> Int)</code>.
+          Así se ve, que cuando hay una cadena de fletchas, lo que representa son funciones que devuelven funciones que devuelven funciones...
+        </p>
+      </section>
+      <section>
+        <h1>Maneras de definir nuevos tipos</h1>
+        <p>
+          En haskell hay tres maneras de definir nuevos típos con los cuales trabajar:
+          <code>type</code>, <code>newtype</code> y <code>data</code>
+        </p>
+        <h2>Type</h2>
+        <p>
+          cuando se usa <code>type</code>, no se esta creando tanto un nuevo típo de información
+          sino más llamando un típo por otro. Es decir, que el nuevo típo creado es intercambiable
+          con el que define.
+          Es decir, Puedes usar un típo donde se pide el otro y vice versa.
+          Un ejemplo en la librería base de Haskell es el texto.
+          En haskell, <code>String</code> se define como una lísta de caracteres, es decir,
+          <code>[Char]</code>. Con lo que cuando se pide una lísta abstracta, se le puede
+          dar un String ya que este es una lísta de caracteres.
+          Las ventajas de esto es que se puede hacer mas fácil la lectura de la tipificación del programa.
+        </p>
+        <p>
+          Para definir tu própio <code>type</code> necesitas un nombre para tu nuevo tipo y lo que representa.
+          Además se puede aportar un típo como argumento para que se vea que trabaja sobre este.
+          Por ejemplo, si quieres representar un predicado, una función de un elemento a un booleano, se
+          definiría así:
+        </p>
+        <pre>
+          <code class ="codeblock">
+            type Predicate a = (a -> Bool)
+          </code>
+        </pre>
+        <p>
+          Así, <code>Predicate Int</code> es una función de un número a un booleano.
         </p>
       </section>
     </div>
