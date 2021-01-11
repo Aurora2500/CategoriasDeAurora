@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Categorías de Aurora</title>
+  <meta name="author" content="Aurora">
+  <meta name="description" content="Mi blog sobre temas de Haskell, y teoría de Algebra y de Categorías relacionado con el tema.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+  <nav>
+    <div class="title">Categorías de Aurora</div>
+    <ul class="navbar">
+      <li><a href="index.html">Principal</a></li>
+      <li><a href="contactos.html">Contactos</a></li>
+    </ul>
+  </nav>
+  <div class="page">
+    <div class="sidebar">
+      <ul class="sidelist">
+        <li>Introducción</li>
+        <li>Functores</li>
+      </ul>
+    </div>
+    <div class="content">
+      <section>
+        <h1>Functores</h1>
+        <p>
+          Un functor es un concepto muy abstracto cuando se programa en Haskell.
+          En sí, un functor es un typeclass con úna función, <code>fmap</code>.
+        </p>
+        <pre>
+          <code class="codeblock">
+            class Functor f where
+              fmap :: (a -> b) -> f a -> f b
+          </code>
+        </pre>
+        <p>
+          Además, se ve que un functor es un constructor de típos.
+          Un functor no existe por si mismo, sino tiene un típo interno.
+          Por esto, una buena analogía para los functores son cajas.
+          Un functor tendrá un valor interno, y además se puede modificar este valor interno
+          mediante <code>fmap</code>.
+          Gracias a currying, hay dos maneras de pensar de esta función.
+          La primera, es que esta función "eleva" otras funciones a un estado functorial.
+          Y la segunda manera, es que coge una función, un valor functorial y penetra el functor
+          para aplicar la función al valor interno del functor.
+        </p>
+        <p>
+          Para entenderlos mejor, presentaré un par de ejemplos de functores:
+          el functor <code>Maybe</code>, <code>List</code>, <code>IO</code> y las funciones.
+        </p>
+      </section>
+      <section>
+        <h1>Maybe</h1>
+        <p>
+          Un <code>Maybe</code> representa un valor que puede fallar.
+          Es decir, si tienes un <code>Int</code>, simplemente tienes un número,
+          y puedes estar seguro que tienes un número.
+          Pero si tienes un <code>Maybe Int</code>, es que <i>puede ser</i> que tengas un número,
+          también puede ser que no lo tengas.
+        </p>
+        <p>
+          En este caso, el Maybe funciona como una caja que <i>tal vez</i> tenga un valor interno,
+          pero también puede que sea vacío. Y el <code>fmap</code> en este caso lo que hace es
+          "penetrar" esta caja y cambiar el valor interno.
+        </p>
+        <p>
+          Como ejemplo, imaginate que hay un texto,
+          y quieres saber su tamaño mediante <code>length</code>.
+        </p>
+      <section>
+    </div>
+  </div>
+</body>
+</html>
