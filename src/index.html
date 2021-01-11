@@ -183,6 +183,25 @@
             data Persona = Persona String Int
           </code>
         </pre>
+        <h2>Newtype</h2>
+        <p>
+          Por último está el <code>newtype</code>.
+          Este es como una combinación de <code>type</code> y <code>data</code>.
+          Más concretamente, funciona como <code>data</code>, excepto que solo puedes definir un constructor.
+          Su uso es el del crear nuevos típos a partir de típos que ya existen, de forma que le puedes asignar una instancia de varias clases
+          a un típo que antiguamnente no lo era.
+          Pero además, la información del nuevo típo solo existe cuando el compilador comprueba que el código está correcto, cuando el programa
+          se ejecuta la abstracción no existe, de forma que es tán rápido como utilizar el típo original.
+        </p>
+        <pre>
+          <code class="codeblock">
+            newtype Matrix a = Matrix [[a]]
+          </code>
+        </pre>
+        <p>
+          Esto defíne un nuevo típo llamado matriz, que es solo un vector de vectores.
+          De esta forma se puede darle definiciones de Functores y otros típos, y además no habrá abstractación al ejecutarlo.
+        </p>
       </section>
     </div>
   </div>
