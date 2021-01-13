@@ -49,7 +49,7 @@
         </p>
         <p>
           Para entenderlos mejor, presentaré un par de ejemplos de functores:
-          el functor <code>Maybe</code>, <code>List</code>, <code>IO</code> y las funciones.
+          el functor <code>Maybe</code>, <code>List</code>, <code>IO</code> y las funciones sí mismas.
         </p>
       </section>
       <section>
@@ -69,8 +69,83 @@
         <p>
           Como ejemplo, imaginate que hay un texto,
           y quieres saber su tamaño mediante <code>length</code>.
+          Si este es un simple <code>String</code>, se puede aplicar la funcion sin problema.
+          ¿Pero que pasa si en véz tienes un <code>Maybe String</code>?
+          Si tiene un valor interno, tendría sentido que devolviese el tamaño del texto dentro de la caja,
+          y si esta vacio, entonces no devolvera nada.
+          De forma que, en vez de devolver un <code>Int</code>, devolverá <code>Maybe Int</code>.
         </p>
+        <pre>
+          <code class="codeblock">
+            length :: String -> Int
+            fmap length :: Maybe String ->Maybe Int
+          </code>
+        </pre>
+        <p>
+          En conclusión, para un <code>Maybe</code>, devolverá la funcion applicada al valor interno si lo hay,
+          y si no devolverá <code>Nothing</code>.
+        </p>
+        <pre>
+          <code class="codeblock">
+            instance Functor Maybe where
+              fmap f (Just x) = Just (f x)
+              fmap f Nothing = Nothing
+          </code>
+        </pre>
+      </section>
       <section>
+        <h1>List</h1>
+        <p>
+          Un <code>List</code> puede tener una colección de un típo en vez de un solo elemento.
+          Pues mientras un <code>Int</code> solo representa 1 número,
+          <code>[Int]</code> representa una collección ordenada de números que puede representar cualquier cantidad de números.
+        </p>
+        <pre>
+          <code class="codeblock">
+            3 :: Int
+            [43, 92, 7, 1, 5] :: [Int]
+          </code>
+        </pre>
+        <p>
+          En este caso, siguiendo la analogía de la caja, ésta representa una caja que mantiene una colección de elementos.
+          Y cuando se le aplica una función, esta se aplica a cada elemento de la lista, manteniendo el orden y el tamaño de esta.
+        </p>
+        <p>
+          Un ejemplo sería el de sumarle 5 a cada elemento en una lista de números:
+        </p>
+        <pre>
+          <code class="codeblock">
+            (+5) :: Int -> Int
+            fmap (+5) :: [Int] -> [Int]
+            fmap (+5) = [43, 92, 7, 1, 5] = [48, 97, 12, 6, 10]
+          </code>
+        </pre>
+        <p>
+          Su definición sería como lo siguiente:
+        </p>
+        <pre>
+          <code class="codeblock">
+          instance Functor [] where
+            fmap f [] = []
+            fmap f (x:xs) = f x : fmap f xs
+          </code>
+        </pre>
+      </section>
+      <section>
+        <h1>IO</h1>
+        <p>
+          El típo <code>IO</code> representa un "efecto secundario" con consecuencias.
+          Es decir, cuando se quiere actuar sobre el mundo real, como imprimir algo a la pantalla, o leer un archivo,
+          Se tendrá que realizar mediante <code>IO</code>,
+          ya que de otra manera sería imposible de realizar acciones impuras dentro de un programma puro, que es lo que Haskell pretende hacer.
+        </p>
+        <pre>
+          <code class="codeblock">
+            putStr :: String -> IO() -- coge un String y lo imprime a la pantalla
+            readFile :: FilePath -> IO String -- coge el nombre de un archivo y lo lee como un String.
+          </code>
+        </pre>
+      </section>
     </div>
   </div>
 </body>
