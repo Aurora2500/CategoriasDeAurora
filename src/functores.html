@@ -141,10 +141,38 @@
         </p>
         <pre>
           <code class="codeblock">
-            putStr :: String -> IO() -- coge un String y lo imprime a la pantalla
+            putStr :: String -> IO()          -- imprime texto a la consola
             readFile :: FilePath -> IO String -- coge el nombre de un archivo y lo lee como un String.
           </code>
         </pre>
+        <p>
+        En estos dos ejemplos, se ve de como realizar una acción impura es envuelta en IO.
+        La primera función imprime texto a la pantalla, con lo que el valor que devuelve este es nula.
+        Pero aun así, al evaluarlo este actuará sobre el mundo.
+        En la segunda, se lee el contenido de un archivo.
+        EL resultado es el texto que hay en el archivo envuelto dentro de IO.
+        Esto es para manejar si hay problemas leyendo el archivo y para separar las partes puras
+        del programa de las impuras.
+        Ya que el texto que viene en el archivo viene de fuera del programa, por lo que se
+        debe considerar impuro.
+        </p>
+        <p>
+          En este caso, cuando pensamos del <code>IO</code> como una "caja",
+          la analojia empieza a aflojarse.
+          En este caso, la caja es un contenedor de contenido del exterior.
+          No tiene contenido dentro en sí, pero cuando lo quieres abrir, sale al mundo
+          exterior para conseguir un valor interno.
+        </p>
+        <pre>
+          <code class="codeblock">
+            tamañoDeArchivo :: FilePath -> IO Int
+            tamañoDeArchivo archivo = fmap length (readFile archivo)
+          </code>
+        </pre>
+        <p>
+          Este ejemplo presenta una función que leerá un archivo y conseguirá cuantas letras
+          contiene el contenido.
+        </p>
       </section>
     </div>
   </div>
