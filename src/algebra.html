@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Categorías de Aurora</title>
+  <meta name="author" content="Aurora">
+  <meta name="description" content="Mi blog sobre temas de Haskell, y teoría de Algebra y de Categorías relacionado con el tema.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+  <nav>
+    <div class="title">Categorías de Aurora</div>
+    <ul class="navbar">
+      <li><a href="index.html">Principal</a></li>
+      <li><a href="contactos.html">Contactos</a></li>
+    </ul>
+  </nav>
+  <div class="page">
+    <div class="sidebar">
+      <ul class="sidelist">
+        <li>Introducción</li>
+        <li>Functores</li>
+      </ul>
+    </div>
+    <div class="content">
+      <section>
+        <h1>Álgebra en Haskell</h1>
+        <p>
+          Por último, se va a ver un poco de como nos puede servir útil
+          el álgebra en Haskell.
+          Cuando se habla de álgebra, se habla sobre estructuras que hay y como se pueden
+          relacionar.
+          Más concretamente, se hablará sobre semigrupos, monoides y grupos.
+        </p>
+      </section>
+      <section>
+        <h1>Semigrupos</h1>
+        <p>
+          Cuando se habla de un semigrupo, se habla de un típo que tiene una manera
+          de "unir" dos de sus elementos en uno. Y que además esta operación sea
+          asociativa.
+        </p>
+        <pre>
+          <code class="codeblock">
+            class Semigroup a where
+              (<>) :: a -> a -> a
+          </code>
+        </pre>
+        <p>
+          Con los semigrupos, es posible generalizar muchas operaciones a algo que se pueda
+          unir o seleccionar.
+        </p>
+        <p>
+          Un ejemplo de un semigrupo son las listas.
+          En este caso esta operación es la concatenación de listas.
+        </p>
+        <pre>
+          <code class="codeblock">
+            [1, 2, 3] <> [4, 5, 6] = [1, 2, 3, 4, 5, 6]
+            [1, 2] <> [3, 4] <> [5, 6] = [1, 2, 3, 4, 5, 6] -- asociatividad
+          </code>
+        </pre>
+        <p>
+          Otro ejemplo notable puede ser los números, pero el problema es que hay
+          múchos diferentes semigrupos de los cuales forman los números.
+          Cuando unes dos númeos, se pueden sumar, multiplicar, coger el valor
+          menor, el valor mayor, etc.
+          Por eso, hay que envolver los númeors en típos para cada
+          operación.
+          De esta manera, puedes envolver numeros en un típo de suma, tal que
+          unirlos los sumará, o en un típo de producto, tal que unirlos los
+          multiplicará, o en un típo de valor mínimo, tal que unirlos cogerá
+          el númeo menor.
+        </p>
+        <pre>
+          <code class="codeblock">
+            (Sum 2)     <> (Sum 3)     = (Sum 5)     -- se suman
+            (Product 2) <> (Product 3) = (Product 6) -- se multiplican
+            (Min 2)     <> (Min 3)     = (Min 2)     -- se elige el menor
+          </code>
+        </pre>
+      </section>
+      <section>
+        <h1>Monoides</h1>
+        <p>
+          Un monoide es un semigrupo con un elemento de identidad.
+          Es decir, un elemento que operado con cualquier otro elemento
+          nos dará ese otro elemento.
+          Este puede ser un 0 al sumar, un 1 al multiplicar, la función
+          identidad al componer funciones...
+        </p>
+        <pre>
+          <code class="codeblock">
+            class Semigroup a => Monoid a where
+              mempty :: a
+          </code>
+        </pre>
+        <p>
+          Ya que tiene un elemento "predeterminado", es posible hacer varias
+          operaciones con estos. Por ejemplo collapsar una lista a un único elemento.
+          Esta función normalmente se llama <code>mconcat</code>.
+        </p>
+        <pre>
+          <code class="codeblock">
+            mconcat $ fmap Sum [1, 3, 5, 6]     = (Sum 15)
+            mconcat $ fmap Product [1, 3, 5, 6] = (Product 90)
+          </code>
+        </pre>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

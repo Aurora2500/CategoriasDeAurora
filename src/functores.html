@@ -158,7 +158,7 @@
         </p>
         <p>
           En este caso, cuando pensamos del <code>IO</code> como una "caja",
-          la analojia empieza a aflojarse.
+          la analogia empieza a aflojarse.
           En este caso, la caja es un contenedor de contenido del exterior.
           No tiene contenido dentro en sí, pero cuando lo quieres abrir, sale al mundo
           exterior para conseguir un valor interno.
@@ -173,6 +173,62 @@
           Este ejemplo presenta una función que leerá un archivo y conseguirá cuantas letras
           contiene el contenido.
         </p>
+      </section>
+      <section>
+        <h1>Funciones</h1>
+        <p>
+          Las funciones también son functores.
+          Aunque sea dificir imaginarse que quiere decir que una función sea una "caja".
+          La analogía aún funciona si expandimos el concepto de una caja.
+        </p>
+        <p>
+          En este caso, la caja no tiene un único valor interno, pero cuando se le
+          mete un valor lo transforma.
+          ¡Es como un horno!
+        </p>
+        <pre>
+          <code class="codeblock">
+            horno :: Harina -> Pan
+          </code>
+        </pre>
+        <p>
+            Aunque aquí, algo notable es que una función depende de dos típos,
+            la entrada y la salida, mientras que un functor solo es de un típo.
+            Por esto, al definir un functor, la entrada de la función es el mismo típo.
+            Es decir, si dos funciones cogen el mismo típo de entrada,
+            son del mismo functor.
+        </p>
+        <pre>
+          <code class="codeblock">
+            hornoDePan   :: Harina -> Pan
+            hornoDePasta :: Harina -> Pasta
+            -- Los dos cogen Harina, con lo que son el mísmo functor.
+            -- La diferencia es que uno es un Functor sobre Pan,
+            -- mientras que el otro es un functor sobre Pasta.
+          </code>
+        </pre>
+        <p>
+          Ahora, cuando se quiere "aplicar" un <code>fmap</code> sobre el functor
+          y cambiar su valor interno, lo que se esá haciendo es aplicar esa función sobre
+          el resultado de la pimera función.
+        </p>
+        <pre>
+          <code class="codeblock">
+            crearBocadillos :: Pan -> Bocadillo
+            hornoDePan :: Harina -> Pan
+            fmap creadBocadillos hornoDePan :: Harina -> Bocadillo
+          </code>
+        </pre>
+        <p>
+          ¡Si presta atención,
+          se dará cuenta que esto es una símple composición de funciones!
+        </p>
+        <pre>
+          <code class="codeblock">
+            instance Functor ((->) a) where
+                fmap = (.)
+          </code>
+        </pre>
       </section>
     </div>
   </div>
