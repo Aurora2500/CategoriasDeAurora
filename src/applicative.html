@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Categorías de Aurora</title>
+  <meta name="author" content="Aurora">
+  <meta name="description" content="Mi blog sobre temas de Haskell, y teoría de Algebra y de Categorías relacionado con el tema.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+  <nav>
+    <div class="title">Categorías de Aurora</div>
+    <ul class="navbar">
+      <li><a href="index.html">Principal</a></li>
+      <li><a href="contactos.html">Contactos</a></li>
+    </ul>
+  </nav>
+  <div class="page">
+    <div class="sidebar">
+      <ul class="sidelist">
+        <li>Introducción</li>
+        <li>Functores</li>
+      </ul>
+    </div>
+    <div class="content">
+      <section>
+        <h1>Applicativas</h1>
+        <p>
+          Despues de functores vienen las applicativas.
+          Es decir, cada applicativa que veas también es un functor,
+          aunque lo opuesto no siempre sea real.
+          De esta manera las applicativas son un típo de functor más potente.
+        </p>
+        <pre>
+          <code class="codeblock">
+            class Functor f => Applicative f where
+              pure :: a -> f a
+              (<*>) :: f (a -> b) -> f a -> f b
+          </code>
+        </pre>
+        <p>
+        En su definición en Haskell, tiene dos funciones.
+        Una <code>pure</code>, que envuelve un valor en un "contexto puro"
+        de la applicativa;
+        y <code><*></code>, que aplica una función envuelto en una applicativa a otro
+        valor envuelto en otra applicativa del mismo típo.
+        </p>
+        <p>
+          Como en el caso de los functores, presentaré los mísmos ejemplos,
+          ya que los anteriores también son ejemplos de applicativas.
+        </p>
+      </section>
+      <section>
+        <h1>Maybe</h1>
+        <p>
+          En el caso del <code>Maybe</code>, un valor en un "contexto puro"
+          sería estar envuelto en un <code>Just</code>, para que el valor se conserve.
+          Mientras que aplicar una función envuelta en <code>Maybe</code> si está en un
+          <code>Just</code>, se applicaría sin problema, pero si es un <code>Nothing</code>
+          entonces no se puede aplicar con lo que devuelve un <code>Nothing</code> también.
+        </p>
+        <pre>
+          <code class="codeblock">
+            Instance Applicative Maybe where
+              pure = Just
+              (Just f) <*> (Just x) = Just (f x)
+              _ <*> _ = Nothing
+          </code>
+        </pre>
+        <p>
+          Con esto se puede además utilizar funciones con una aridad mayor que 1
+          sobre valores envueltos en <code>Just</code>.
+        </p>
+        <pre>
+          <code class="codeblock">
+            (+)  <$> Just 3 <*> Just 4 = Just 7
+            (,,) <$> Just 5 <*> Just 2 <*> Just 6 = Just (5, 2, 6)
+            (,,) <$> Just 5 <*> Nothing <*> Just 6 = Nothing
+          </code>
+        </pre>
+        <p>
+          De forma de que si cualquier elemento en la cadena de la computación
+          falle, toda la computación también falla.
+        </p>
+      </section>
+      <section>
+        <h1>List</h1>
+        <p>
+          En el caso de ver listas como un elemento de computación,
+          estas representan computaciones indeterminísticas.
+          De forma que si hay una inciertitud a lo largo de la computación,
+          se computan todas las posibles permutaciones
+        </p>
+      </section>
+      <section>
+        <h1>IO</h1>
+      </section>
+      <section>
+        <h1>Funciones</h1>
+      </section>
+    </div>
+  </div>
+</body>
+</html>
