@@ -104,7 +104,45 @@
         <pre>
           <code class="codeblock">
             mconcat $ fmap Sum [1, 3, 5, 6]     = (Sum 15)
+            mconcat $ fmap Sum []               = (Sum 0)
             mconcat $ fmap Product [1, 3, 5, 6] = (Product 90)
+            mconcat $ fmap Product []           = (Product 1)
+          </code>
+        </pre>
+        <p>
+          Como en el ejemplo anterior, se puede generalizar este uso a un mapa de un elemento
+          a un monoide y enonces collapsarlos todos a un único elemento.
+          En la biblioteca de haskell esta función se llama <code>mconcatMap</code>.
+        </p>
+        <pre>
+          <code class="codeblock">
+            mconcatMap Sum [1, 3, 5, 6]     = (Sum 15)
+            mconcatMap Sum []               = (Sum 0)
+            mconcatMap Product [1, 3, 5, 6] = (Product 90)
+            mconcatMap Product []           = (Product 1)
+          </code>
+        </pre>
+      </section>
+      <section>
+        <h1>Grupos</h1>
+        <p>
+          Por último estan los grupos.
+          Mientras que estos no existen en la biblioteca estandar de Haskell, hay módulos que existen
+          de estos y creo que es un concepto que vale la pena estudiar.
+        </p>
+        <p>
+          Un Grupo es como un monoide pero que además tiene una función unaria
+          de cada elemento del conjunto a una "inversa", que al operarla con cualquier otro
+          elemento.
+          De forma que operar sobre un elemento y su inversa da el elemento de identidad.
+        </p>
+        <p>
+          En Haskell esto se podría definir como:
+        </p>
+        <pre>
+          <code class="codeblock">
+            class Monoid a => Group a where
+              inv :: a -> a
           </code>
         </pre>
       </section>
