@@ -34,9 +34,9 @@
         </p>
         <pre>
           <code class="codeblock">
-            class Functor f => Applicative f where
-              pure :: a -> f a
-              (<*>) :: f (a -> b) -> f a -> f b
+         class Functor f => Applicative f where
+           pure :: a -> f a
+           (<*>) :: f (a -> b) -> f a -> f b
           </code>
         </pre>
         <p>
@@ -62,10 +62,10 @@
         </p>
         <pre>
           <code class="codeblock">
-            Instance Applicative Maybe where
-              pure = Just
-              (Just f) <*> (Just x) = Just (f x)
-              _ <*> _ = Nothing
+         Instance Applicative Maybe where
+           pure = Just
+           (Just f) <*> (Just x) = Just (f x)
+           _ <*> _ = Nothing
           </code>
         </pre>
         <p>
@@ -74,9 +74,9 @@
         </p>
         <pre>
           <code class="codeblock">
-            (+)  <$> Just 3 <*> Just 4 = Just 7
-            (,,) <$> Just 5 <*> Just 2 <*> Just 6 = Just (5, 2, 6)
-            (,,) <$> Just 5 <*> Nothing <*> Just 6 = Nothing
+        (+)  <$> Just 3 <*> Just 4 = Just 7
+        (,,) <$> Just 5 <*> Just 2 <*> Just 6 = Just (5, 2, 6)
+        (,,) <$> Just 5 <*> Nothing <*> Just 6 = Nothing
           </code>
         </pre>
         <p>
@@ -90,14 +90,104 @@
           En el caso de ver listas como un elemento de computación,
           estas representan computaciones indeterminísticas.
           De forma que si hay una inciertitud a lo largo de la computación,
-          se computan todas las posibles permutaciones
+          se computan todas las posibles permutaciones.
         </p>
+        <pre>
+          <code class="codeblock">
+        Instance Applicative [] where
+          pure x = [x]
+          (f:fs) <*> xs = map f xs ++ fs <*> xs
+          _ <*> _ = []
+          </code>
+        </pre>
+        <p>
+          De esta manera, el resultado será toda la posible permutación de función y valores
+          que hay en las lístas.
+          Además, cuando se habla de una lísta en un estado "puro", es solo un elemento
+          con un solo resultado. Ya que al considerar todas las combinaciones con
+          esta lísta de un único elemento.
+          Solo hay una opción.
+        </p>
+        <pre>
+          <code class="codeblock">
+        (+) <$> [1, 2, 3] <*> [10, 20]    = [11, 21, 12, 22, 13, 23]
+        (,) <$> [1, 2] <*> [10, 20] = [(1, 10), (1, 20), (2, 10), (2, 20)]
+          </code>
+        </pre>
       </section>
       <section>
         <h1>IO</h1>
+        <p>
+          En cuanto a acciones IO, mientras que no tenga mucho sentido que exista
+          una función dentro de esta aplicativa, aún tiene sentido cuando
+          se le mapa una función mediante currying y se quiere resolver su valor.
+          Además, Existe una función que trabaja sobre aplicativas muy util llamada
+          <code>sequenceA</code>:
+        </p>
+        <pre>
+          <code class="codeblock">
+        sequenceA :: (Traversable t, Applicative f) => t (f a) -> f (t a)
+        -- Visto más simplemente
+        sequenceA :: (Applicative f) => [f a] -> f [t a]
+          </code>
+        </pre>
+        <p>
+          En teoría <code>sequenceA</code> puede trabajar sobre cualquier traversable,
+          pero para simplificarlo, utilizaremos las lístas, un traversable facil de
+          entender.
+        </p>
+        <p>
+          De esta manera, se puede ver que esta función coje una lísta de applicativas
+          y las convierte en una applicativa que contiene una única lista.
+        </p>
+        <pre>
+          <code class="codeblock">
+        getLine                        :: IO String
+        sequenceA $ [getLine, getLine] :: IO [String]
+          </code>
+        </pre>
+        <p>
+          En este ejemplo, un <code>getLine</code> leerá una línea de la consola
+          y lo envolverá en un IO.
+          Mientras que el que usa sequenceA realizará cada operación en orden,
+          en este caso leyendo una línea por cada acción dentro de la lista.
+          y entonces envolviendolo en otra lísta.
+        </p>
       </section>
       <section>
         <h1>Funciones</h1>
+        <p>
+          Por último, hay funciones.
+          Averiguar la tipología puede confundir un poco.
+          Pero la definición es esta:
+        </p>
+        <pre>
+          <code class="codeblock">
+        instance Applicative ((->) k) where
+            pure = const
+            g <*> h = \x -> g x (h x)
+          </code>
+        </pre>
+        <p>
+          En este caso, utilizar la función de unir dos aplicativas
+          puede resultar confuso.
+          Pero aun así se puede resultar útil con la función
+          <code>sequenceA</code>.
+          Un ejemplo que uso muy a menudo es el de
+          unir varios predicados.
+        </p>
+        <pre>
+          <code class="codeblock">
+        pred1 :: a -> Bool
+        sequenceA [pred1, pred2, pred3] :: a -> [Bool]
+        and $ sequenceA [pred1, pred2, pred3] :: a -> Bool
+        or  $ sequenceA [pred1, pred2, pred3] :: a -> Bool
+          </code>
+        </pre>
+        <p>
+          En este caso, si pred1, pred2, y pred3 son funciones que cogen
+          un elemento y te dicen si son verdaderas o falsas.
+        </p>
       </section>
     </div>
   </div>
