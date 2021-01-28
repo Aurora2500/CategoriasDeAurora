@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Categorías de Aurora</title>
+  <meta name="author" content="Aurora">
+  <meta name="description" content="Mi blog sobre temas de Haskell, y teoría de Algebra y de Categorías relacionado con el tema.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+  <nav>
+    <div class="title">Categorías de Aurora</div>
+    <ul class="navbar">
+      <li><a href="index.html">Principal</a></li>
+      <li><a href="contactos.html">Contactos</a></li>
+    </ul>
+  </nav>
+  <div class="page">
+    <div class="sidebar">
+      <ul class="sidelist">
+        <li>Introducción</li>
+        <li>Functores</li>
+      </ul>
+    </div>
+    <div class="content">
+      <section>
+        <h1>Monadas</h1>
+        <p>
+          Si has oído de Haskell, probablemente has oído de que se usan muchas monadas.
+          La mejor manera de entender una monada, es que son unidades de computación que
+          se pueden componer.
+          Y además, en general cada diferente típo de monada reoresenta algun típo de
+          effecto en cuanto a computaciones.
+        </p>
+        <pre>
+          <code class="codeblock">
+         class Applicative m => Monad m where
+           return :: a -> m a
+           (>>=)  :: m a -> (a -> m b) -> m b
+          </code>
+        </pre>
+        <p>
+          La función <code>return</code> es idéntica a <code>pure</code>
+          de las applicativas.
+          Mientras que la nueva, <code>(>>=)</code> es lo que hace que las
+          monadas sean tan especiales.
+        </p>
+        <p>
+          Esta coge un valor típo a envuelta en una monada, una función de
+          solo a hacia otro típo b de valor monádico. ¡Y devuelve la computación envuelta
+          en la monada!
+          En este sentido, las monadas permiten applicar su valor interior de una manera púra.
+        </p>
+        <p>
+          Como en los otros dos casos anteriores, presentare varios ejemplos de monadas.
+        </p>
+      </section>
+      <section>
+        <h1>Maybe</h1>
+        <p>
+          Un <code>Maybe</code> representa una computación que se puede fallar.
+          Con lo que componer varias computaciones que fallan significa
+          que si cualquier una de ellas falle, toda la computación entera también fallará.
+        </p>
+        <pre>
+          <code class="codeblock">
+         instance Monad Maybe where
+            (Just x) >>= f = f x
+            Nothing  >>= _ = Nothing
+          </code>
+        </pre>
+        <p>
+          De este sentido, cuando se intenta aplicar f a un valor monádico, solo se podrá
+          realizar la función si el valor monádico no falló.
+          Y además, esta nueva computación f también puede fallar.
+          Esto se diferencia de un functor en que la aplicación de una función
+          sobre un functor no puede cambiar el contexto del functor.
+        </p>
+        <p>
+          Como ejemplo, considera que queremos crear un videojuego donde tienes
+          vida, y si la vida cae a 0, el personaje muere.
+          De esta manera, se podría imaginar que hay una función de dañar y otra
+          de curar.
+          En el caso de dañar, esto puede que falle o que no, si le daña al
+          personaje y aún tiene vida, devolverá lo que le queda. Y si nó,
+          no devolverá nada.
+        </p>
+        <pre>
+          <code class="codeblock">
+         type Hp = Int
+         dañar :: Hp -> Hp ->Maybe Hp
+         dañar d x
+            | d >= x = Nothing
+            | otherwise = Just $ x - d
+
+        curar :: Hp -> Hp -> Hp
+        curar c x = Just $ x + c
+          </code>
+        </pre>
+        <p>
+          Es posible componer estas funciones, tal que se le dañe al personaje o
+          se le cure.
+        </p>
+        <pre>
+          <code class="codeblock">
+         Just 10 >>= dañar 3 >>= dañar 4 = Just 3
+         -- Dañar 3 y 4 le quedará con 3 de vida al personaje
+         Just 10 >>= dañar 7 >>= dañar 4 = Nothing
+         -- El daño en total es 11, con lo que le mata al personaje
+         Just 10 >>= dañar 5 >>= curar 6 = Just 11
+         -- Se curó uno mas que se le daño, con lo que tiene más vida
+         Just 10 >>= dañar 7 >>= curar 4 >>= dañar 6 = Just 1
+         Just 10 >>= dañar 7 >>= dañar 6 >>= curar 4 = Nothing
+         -- Se le daña y cura la misma cantidad,
+         -- pero al final depende del orden!!!
+          </code>
+        </pre>
+        <p>
+          Los últimos dos ejemplos son los más interesantes.
+          En el primer caso, se le curó entre el daño, con lo
+          que lo pudo sobrevivir.
+          Mientras que en el otro caso se le curó despues
+          de todo el daño.
+          Y se vé que, mientras que el daño neto lo habría hecho sobrevivir.
+          Ya que se le intentó curar solo cuando ya ha muerto, no se puede hacer.
+        </p>
+      </section>
+      <section>
+        <h1>List</h1>
+        <p>
+          En el caso de listas, el contexto que representan son lo indeterminístico.
+          Es decir, puede haber de que una computación no de ún solo valor, sino
+          varios valores. Con lo que simplemente
+          se juntan todos los posibles valores en una lista.
+          Y al componer estas funciones indeterminísticas, la computación
+          final será una lísta con todas las posibles combinaciones de funciones sobre
+          cada resultado.
+        </p>
+        <pre>
+          <code class="codeblock">
+         instance Monad [] where
+            (x:xs) >>= f = f x ++ xs >>= f
+            []  >>= _ = []
+          </code>
+        </pre>
+        <p>
+          De este modo, a diferencia de un functor,
+          aplicar estas nuevas funciones además pueden cambiar
+          el número de elementos en la lista.
+        </p>
+      </section>
+      <section>
+        <h1>IO</h1>
+      </section>
+      <section>
+        <h1>Funciones</h1>
+      </section>
+    </div>
+  </div>
+</body>
+</html>
