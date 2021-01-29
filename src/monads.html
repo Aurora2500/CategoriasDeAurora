@@ -152,6 +152,38 @@
       </section>
       <section>
         <h1>IO</h1>
+        <p>
+          La manera más facil e útil de utilizar el IO es mediante monadas!
+          Ya que normalmente lo que hace un
+          programa es obtener datos, trabajar con ellos,
+          y darlos de vuelta (como imprimirlos a la pantalla,
+          guardar en un archivo, etc).
+        </p>
+        <p>
+          En cuanto a lo que significa componercomputaciones IO,
+          es darle el contenido de las computaciones siguientes,
+          y propagar errores en cualquier caso que algo malo pase.
+        </p>
+        <p>
+          Como ejemplo considera un programa al que le das el nombre de un archivo,
+          lee el contenido del archivo, y lo imprime a la pantalla.
+        </p>
+        <pre>
+          <code class="codeblock">
+         getLine :: IO String
+         -- Leer de la consola
+         readFile :: String -> IO String
+         -- Leer archivo dado un nombre de archivo
+         putStr :: String -> IO ()
+         -- Imprimir texto a la pantalla
+         getLine >>= readFile >>= putStr :: IO ()
+          </code>
+        </pre>
+        <p>
+          Se vé que se estan produciendo 3 acciones IO, y
+          el resultado de cada una se utiliza para la próxima.
+          Con lo que se están componiendo las acciones.
+        </p>
       </section>
       <section>
         <h1>Funciones</h1>
