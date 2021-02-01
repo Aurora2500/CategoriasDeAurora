@@ -54,6 +54,8 @@
         </p>
         <p>
           Como en los otros dos casos anteriores, presentare varios ejemplos de monadas.
+          Aunque nó se hará el ejemplo de funciones, ya que son muy específicas y no tienen
+          un uso habitual como monadas.
         </p>
       </section>
       <section>
@@ -183,10 +185,63 @@
           Se vé que se estan produciendo 3 acciones IO, y
           el resultado de cada una se utiliza para la próxima.
           Con lo que se están componiendo las acciones.
+          En teoría estas computaciones son conseguir el texto de la consola,
+          leer el archivo cuyo nobre se ha leido de la consola,
+          e imprimirlo de vuelta a la pantalla.
+        </p>
+        <p>
+          Pero ya que no son puras, no se puede asegurar que estas tres acciones siempre funcionen.
+          Puede que no haiga una consola de la cual se lea,
+          o puede ser que no hay un archivo del nombre dado, o que el usuario no tiene acceso
+          a ese archivo.
+          Pero todo esto se resuelve dentro del <code>IO</code>.
         </p>
       </section>
       <section>
-        <h1>Funciones</h1>
+          <h1>Notación do</h1>
+          <p>
+            Por último está la notación <code>do</code> de las monadas.
+            En vez de escribir <code>>>=</code> por todo el programa.
+            Hay una notación que puede componer las monadas
+            de una manera más parecida a una programación imperatíva.
+          </p>
+          <p>
+            Esta notación consiste en "extraer" los valores de contextos monádicos y
+            por último hay la opción de envolverlos en un nuevo contexto monádico.
+            Por ejemplo, el último ejemplo <code>IO</code> se crearía como:
+          </p>
+        <pre>
+          <code class="codeblock">
+         main :: IO ()
+         main = do
+            titulo <- getLine
+            contenido <- readFile titulo
+            putStr contenido
+          </code>
+        </pre>
+        <p>
+          En este caso, a la derecha de una flecha <code><-</code>, se le pone un valor monádico.
+          Y a la izquierda se le da un nombre al que se le asigna el valor interno sacado del
+          contexto monádico.
+        </p>
+        <p>
+          Otro ejemplo de sumar el contenido de dos valores monádicos sería:
+        </p>
+        <pre>
+          <code class="codeblock">
+         monadd :: (Monad m, Num a) => m a -> m a -> m a
+         monadd mx my = do
+            x <- mx
+            y <- my
+            return (x + y
+          </code>
+        </pre>
+        <p>
+          Ya que en la tipificación de la función se generaliza a cualquier típo
+          monádico, esta función puede servir a qualquiér monada que envuelva a números.
+          Como <code>Maybe Int</code>, <code>List Float</code>, <code>IO Decimal</code>,
+          o cualquier otra monada envolviendo cualquier número que se pueda sumar.
+        </p>
       </section>
     </div>
   </div>
