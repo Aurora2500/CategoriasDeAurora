@@ -20,16 +20,16 @@
   <div class="page">
     <div class="sidebar">
       <ul class="sidelist">
-        <li>Introducción</li>
-        <li>Functores</li>
-        <li>Applicativas</li>
-        <li>Monadas</li>
-        <li>Álgebra</li>
+        <li><a href ="index.html">Introducción</a></li>
+        <li><a href ="functores.html">Functores</a></li>
+        <li><a href ="applicative.html">Applicativas</a></li>
+        <li><a href ="monads.html">Monadas</a></li>
+        <li><a href ="algebra.html">Álgebra</a></li>
       </ul>
     </div>
     <div class="content">
       <section>
-        <h1>Monadas</h1>
+          <a href="#monadas"><h1 id="monadas">Monadas</h1></a>
         <p>
           Si has oído de Haskell, probablemente has oído de que se usan muchas monadas.
           La mejor manera de entender una monada, es que son unidades de computación que
@@ -63,7 +63,7 @@
         </p>
       </section>
       <section>
-        <h1>Maybe</h1>
+          <a href="#maybe"><h1 id="maybe">Maybe</h1></a>
         <p>
           Un <code>Maybe</code> representa una computación que se puede fallar.
           Con lo que componer varias computaciones que fallan significa
@@ -133,7 +133,7 @@
         </p>
       </section>
       <section>
-        <h1>List</h1>
+          <a href="#list"><h1 id="list">List</h1></a>
         <p>
           En el caso de listas, el contexto que representan son lo indeterminístico.
           Es decir, puede haber de que una computación no de ún solo valor, sino
@@ -157,7 +157,7 @@
         </p>
       </section>
       <section>
-        <h1>IO</h1>
+          <a href="#io"><h1 id="io">IO</h1></a>
         <p>
           La manera más facil e útil de utilizar el IO es mediante monadas!
           Ya que normalmente lo que hace un
@@ -202,7 +202,7 @@
         </p>
       </section>
       <section>
-          <h1>Notación do</h1>
+          <a href="#do"><h1 id="do">Notación do</h1></a>
           <p>
             Por último está la notación <code>do</code> de las monadas.
             En vez de escribir <code>>>=</code> por todo el programa.
