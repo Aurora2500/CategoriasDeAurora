@@ -59,12 +59,24 @@ nav .logo {
   background-color: green;
 }
 
-.sidelist li {
-  padding: 10px;
+.sidelist li a {
   margin: black;
 }
-.sidelist li a {
-    color: white;
+.sidelist li a:link, .sidelist li a:visited {
+  display: block;
+  padding: 12px;
+  margin: 5px;
+  color: white;
+  text-decoration: none;
+}
+
+.sidelist li a:hover, .sidelist li a:active {
+  background-color: darkgreen;
+}
+
+hr.pagesep {
+  border: 1px solid;
+  width: 80%;
 }
 
 .content {
@@ -77,6 +89,15 @@ nav .logo {
   display: block;
   height: 60px; /* fixed header height*/
   margin: -60px 0 0; /* negative fixed header height */
+}
+
+section a:link, section a:visited {
+  color: black;
+  text-decoration: none;
+}
+
+section a:hover, section a:active {
+  color: darkslateblue;
 }
 
 p {
