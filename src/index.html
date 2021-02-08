@@ -21,16 +21,20 @@
     <div class="sidebar">
       <ul class="sidelist">
           <li><a href ="index.html">Introducción</a></li>
-          <hr class="pagesep">
           <li><a href ="functores.html">Functores</a></li>
           <li><a href ="applicative.html">Applicativas</a></li>
           <li><a href ="monads.html">Monadas</a></li>
           <li><a href ="algebra.html">Álgebra</a></li>
+          <hr class="pagesep">
+          <li><a href="#introduccion">Introducción</a></li>
+          <li><a href="#haskell">Trabajando con Haskell</a></li>
+          <li><a href="#funciones">Currying y funciones de mayor orden</a></li>
+          <li><a href="#tipos">Maneras de definir nuevos tipos</a></li>
       </ul>
     </div>
     <div class="content">
       <section>
-          <a href="#introduccion"><h1 id="introduccion">Introducción</h1></a>
+        <a href="#introduccion"><h1 id="introduccion">Introducción</h1></a>
         <p>
           Saludos! Este es mi blog de Haskell. En este explicaré vários conceptos
           de la programación funcional, incluyendo algunos temas de teoría de Algebra
@@ -45,7 +49,7 @@
         </p>
       </section>
       <section>
-          <a href="#haskell"><h1 id="haskell">Trabajando con Haskell</h1></a>
+        <a href="#haskell"><h1 id="haskell">Trabajando con Haskell</h1></a>
         <p>
           Haskell es un lenguaje de programación funcional puro. Además tiene
           evaulación no estricta y tipificación estática. ¿Que quiere decir esto?
@@ -82,7 +86,7 @@
           </pre>
       </section>
       <section>
-          <a href="#funciones"><h1 id="funciones">Currying y funciones de mayor orden</h1></a>
+        <a href="#funciones"><h1 id="funciones">Currying y funciones de mayor orden</h1></a>
         <p>
           Dos elementos de Haskell con los que se vá a trabajar mucho son el concepto de currying y de funciones de mayor orden.
           Cuando se habla de funciones de mayor orden, se dice que se usan estas como valores para otras funciones.
@@ -124,7 +128,7 @@
         </p>
       </section>
       <section>
-          <a class="anchor" href="#tipos"><h1 id="tipos">Maneras de definir nuevos tipos</h1></a>
+          <a href="#tipos"><h1 id="tipos">Maneras de definir nuevos tipos</h1></a>
         <p>
           En haskell hay tres maneras de definir nuevos típos con los cuales trabajar:
           <code>type</code>, <code>newtype</code> y <code>data</code>
