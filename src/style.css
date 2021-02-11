@@ -36,18 +36,19 @@ nav .logo {
 .navbar li a {
   display: block;
   padding: 15px;
-  background-color: #dddddd;
+  background-color: #aaa;
   text-decoration: none;
 }
 
 .page {
-  margin-top: 75px;
+  margin-top: 45px;
   margin-bottom: 60px;
 }
 
 .sidebar {
   float: left;
   width: 200px;
+  height: 100%;
   position: fixed;
 }
 
@@ -56,6 +57,7 @@ nav .logo {
   margin: 0;
   padding: 0;
   width: 200px;
+  height: 100%;
   background-color: green;
 }
 
@@ -76,7 +78,8 @@ nav .logo {
 
 hr.pagesep {
   border: 1px solid;
-  width: 80%;
+  color: darkgreen;
+  width: 90%;
 }
 
 .content {
@@ -87,8 +90,8 @@ hr.pagesep {
 :target::before {
   content: "";
   display: block;
-  height: 60px; /* fixed header height*/
-  margin: -60px 0 0; /* negative fixed header height */
+  height: 60px;
+  margin-top: -70px;
 }
 
 section a:link, section a:visited {
