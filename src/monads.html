@@ -6,6 +6,8 @@
   <meta name="author" content="Aurora">
   <meta name="description" content="Mi blog sobre temas de Haskell, y teoría de Algebra y de Categorías relacionado con el tema.">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
   <link href="style.css" rel="stylesheet">
 </head>
 <body>
@@ -46,9 +48,9 @@
         </p>
         <pre>
           <code class="codeblock">
-         class Applicative m => Monad m where
-           return :: a -> m a
-           (>>=)  :: m a -> (a -> m b) -> m b
+        class Applicative m => Monad m where
+          return :: a -> m a
+          (>>=)  :: m a -> (a -> m b) -> m b
           </code>
         </pre>
         <p>
@@ -78,9 +80,9 @@
         </p>
         <pre>
           <code class="codeblock">
-         instance Monad Maybe where
-            (Just x) >>= f = f x
-            Nothing  >>= _ = Nothing
+        instance Monad Maybe where
+          (Just x) >>= f = f x
+          Nothing  >>= _ = Nothing
           </code>
         </pre>
         <p>
@@ -101,9 +103,9 @@
         </p>
         <pre>
           <code class="codeblock">
-         type Hp = Int
-         dañar :: Hp -> Hp ->Maybe Hp
-         dañar d x
+        type Hp = Int
+        dañar :: Hp -> Hp ->Maybe Hp
+        dañar d x
             | d >= x = Nothing
             | otherwise = Just $ x - d
 
@@ -117,16 +119,16 @@
         </p>
         <pre>
           <code class="codeblock">
-         Just 10 >>= dañar 3 >>= dañar 4 = Just 3
-         -- Dañar 3 y 4 le quedará con 3 de vida al personaje
-         Just 10 >>= dañar 7 >>= dañar 4 = Nothing
-         -- El daño en total es 11, con lo que le mata al personaje
-         Just 10 >>= dañar 5 >>= curar 6 = Just 11
-         -- Se curó uno mas que se le daño, con lo que tiene más vida
-         Just 10 >>= dañar 7 >>= curar 4 >>= dañar 6 = Just 1
-         Just 10 >>= dañar 7 >>= dañar 6 >>= curar 4 = Nothing
-         -- Se le daña y cura la misma cantidad,
-         -- pero al final depende del orden!!!
+        Just 10 >>= dañar 3 >>= dañar 4 = Just 3
+        -- Dañar 3 y 4 le quedará con 3 de vida al personaje
+        Just 10 >>= dañar 7 >>= dañar 4 = Nothing
+        -- El daño en total es 11, con lo que le mata al personaje
+        Just 10 >>= dañar 5 >>= curar 6 = Just 11
+        -- Se curó uno mas que se le daño, con lo que tiene más vida
+        Just 10 >>= dañar 7 >>= curar 4 >>= dañar 6 = Just 1
+        Just 10 >>= dañar 7 >>= dañar 6 >>= curar 4 = Nothing
+        -- Se le daña y cura la misma cantidad,
+        -- pero al final depende del orden!!!
           </code>
         </pre>
         <p>
@@ -152,9 +154,9 @@
         </p>
         <pre>
           <code class="codeblock">
-         instance Monad [] where
-            (x:xs) >>= f = f x ++ xs >>= f
-            []  >>= _ = []
+        instance Monad [] where
+          (x:xs) >>= f = f x ++ xs >>= f
+          []  >>= _ = []
           </code>
         </pre>
         <p>
@@ -183,13 +185,13 @@
         </p>
         <pre>
           <code class="codeblock">
-         getLine :: IO String
-         -- Leer de la consola
-         readFile :: String -> IO String
-         -- Leer archivo dado un nombre de archivo
-         putStr :: String -> IO ()
-         -- Imprimir texto a la pantalla
-         getLine >>= readFile >>= putStr :: IO ()
+        getLine :: IO String
+        -- Leer de la consola
+        readFile :: String -> IO String
+        -- Leer archivo dado un nombre de archivo
+        putStr :: String -> IO ()
+        -- Imprimir texto a la pantalla
+        getLine >>= readFile >>= putStr :: IO ()
           </code>
         </pre>
         <p>
@@ -223,11 +225,11 @@
           </p>
         <pre>
           <code class="codeblock">
-         main :: IO ()
-         main = do
-            titulo <- getLine
-            contenido <- readFile titulo
-            putStr contenido
+        main :: IO ()
+        main = do
+          titulo <- getLine
+          contenido <- readFile titulo
+          putStr contenido
           </code>
         </pre>
         <p>
@@ -240,11 +242,11 @@
         </p>
         <pre>
           <code class="codeblock">
-         monadd :: (Monad m, Num a) => m a -> m a -> m a
-         monadd mx my = do
-            x <- mx
-            y <- my
-            return (x + y
+        monadd :: (Monad m, Num a) => m a -> m a -> m a
+        monadd mx my = do
+          x <- mx
+          y <- my
+          return (x + y
           </code>
         </pre>
         <p>

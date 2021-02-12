@@ -6,6 +6,8 @@
   <meta name="author" content="Aurora">
   <meta name="description" content="Mi blog sobre temas de Haskell, y teoría de Algebra y de Categorías relacionado con el tema.">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
   <link href="style.css" rel="stylesheet">
 </head>
 <body>
@@ -43,8 +45,8 @@
         </p>
         <pre>
           <code class="codeblock">
-            class Functor f where
-              fmap :: (a -> b) -> f a -> f b
+        class Functor f where
+          fmap :: (a -> b) -> f a -> f b
           </code>
         </pre>
         <p>
@@ -88,8 +90,8 @@
         </p>
         <pre>
           <code class="codeblock">
-            length :: String -> Int
-            fmap length :: Maybe String ->Maybe Int
+        length :: String -> Int
+        fmap length :: Maybe String ->Maybe Int
           </code>
         </pre>
         <p>
@@ -98,9 +100,9 @@
         </p>
         <pre>
           <code class="codeblock">
-            instance Functor Maybe where
-              fmap f (Just x) = Just (f x)
-              fmap f Nothing = Nothing
+        instance Functor Maybe where
+          fmap f (Just x) = Just (f x)
+          fmap f Nothing = Nothing
           </code>
         </pre>
       </section>
@@ -113,8 +115,8 @@
         </p>
         <pre>
           <code class="codeblock">
-            3 :: Int
-            [43, 92, 7, 1, 5] :: [Int]
+        3 :: Int
+        [43, 92, 7, 1, 5] :: [Int]
           </code>
         </pre>
         <p>
@@ -126,9 +128,9 @@
         </p>
         <pre>
           <code class="codeblock">
-            (+5) :: Int -> Int
-            fmap (+5) :: [Int] -> [Int]
-            fmap (+5) = [43, 92, 7, 1, 5] = [48, 97, 12, 6, 10]
+        (+5) :: Int -> Int
+        fmap (+5) :: [Int] -> [Int]
+        fmap (+5) = [43, 92, 7, 1, 5] = [48, 97, 12, 6, 10]
           </code>
         </pre>
         <p>
@@ -136,9 +138,9 @@
         </p>
         <pre>
           <code class="codeblock">
-          instance Functor [] where
-            fmap f [] = []
-            fmap f (x:xs) = f x : fmap f xs
+        instance Functor [] where
+          fmap f [] = []
+          fmap f (x:xs) = f x : fmap f xs
           </code>
         </pre>
       </section>
@@ -152,8 +154,8 @@
         </p>
         <pre>
           <code class="codeblock">
-            putStr :: String -> IO()          -- imprime texto a la consola
-            readFile :: FilePath -> IO String -- coge el nombre de un archivo y lo lee como un String.
+        putStr :: String -> IO()          -- imprime texto a la consola
+        readFile :: FilePath -> IO String -- coge el nombre de un archivo y lo lee como un String.
           </code>
         </pre>
         <p>
@@ -176,8 +178,8 @@
         </p>
         <pre>
           <code class="codeblock">
-            tamañoDeArchivo :: FilePath -> IO Int
-            tamañoDeArchivo archivo = fmap length (readFile archivo)
+        tamañoDeArchivo :: FilePath -> IO Int
+        tamañoDeArchivo archivo = fmap length (readFile archivo)
           </code>
         </pre>
         <p>
@@ -199,7 +201,7 @@
         </p>
         <pre>
           <code class="codeblock">
-            horno :: Harina -> Pan
+        horno :: Harina -> Pan
           </code>
         </pre>
         <p>
@@ -211,11 +213,11 @@
         </p>
         <pre>
           <code class="codeblock">
-            hornoDePan   :: Harina -> Pan
-            hornoDePasta :: Harina -> Pasta
-            -- Los dos cogen Harina, con lo que son el mísmo functor.
-            -- La diferencia es que uno es un Functor sobre Pan,
-            -- mientras que el otro es un functor sobre Pasta.
+        hornoDePan   :: Harina -> Pan
+        hornoDePasta :: Harina -> Pasta
+        -- Los dos cogen Harina, con lo que son el mísmo functor.
+        -- La diferencia es que uno es un Functor sobre Pan,
+        -- mientras que el otro es un functor sobre Pasta.
           </code>
         </pre>
         <p>
@@ -225,9 +227,9 @@
         </p>
         <pre>
           <code class="codeblock">
-            crearBocadillos :: Pan -> Bocadillo
-            hornoDePan :: Harina -> Pan
-            fmap creadBocadillos hornoDePan :: Harina -> Bocadillo
+        crearBocadillos :: Pan -> Bocadillo
+        hornoDePan :: Harina -> Pan
+        fmap creadBocadillos hornoDePan :: Harina -> Bocadillo
           </code>
         </pre>
         <p>
@@ -236,8 +238,8 @@
         </p>
         <pre>
           <code class="codeblock">
-            instance Functor ((->) a) where
-                fmap = (.)
+        instance Functor ((->) a) where
+          fmap = (.)
           </code>
         </pre>
       </section>

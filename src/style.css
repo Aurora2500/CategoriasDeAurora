@@ -106,6 +106,15 @@ section a:hover, section a:active {
 p {
   text-align: justify;
   text-justify: inter-word;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+code {
+  font-family: 'Fira Code', monospace;
+}
+
+p code {
+    color: darkslateblue;
 }
 
 .codeblock {

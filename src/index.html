@@ -6,6 +6,8 @@
   <meta name="author" content="Aurora">
   <meta name="description" content="Mi blog sobre temas de Haskell, y teoría de Algebra y de Categorías relacionado con el tema.">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
   <link href="style.css" rel="stylesheet">
 </head>
 <body>
@@ -64,13 +66,13 @@
           funciones recursivas. Por ejemplo, esto es un ejemplo de una funcción
           functorial:
         </p>
-          <pre>
-            <code class="codeblock">
-              fact :: Int -> Int
-              fact 0 = 1
-              fact n = n * fact (n-1)
-            </code>
-          </pre>
+        <pre>
+          <code class="codeblock">
+        fact :: Int -> Int
+        fact 0 = 1
+        fact n = n * fact (n-1)
+          </code>
+        </pre>
         <p>
           Cuando se dice que su evaluación nó es estricta. Esto quiere decir que al
           llamar una función, no se evalua. En véz se espera hasta el último momento
@@ -79,12 +81,12 @@
           tomarán un número finito de estas. En este ejemplo, prod es el prodúcto de los
           primeros 20 números de una lista del 1 al infinito:
         </p>
-          <pre>
-            <code class="codeblock">
-              prod :: Int
-              prod = product $ take 20 [1..]
-            </code>
-          </pre>
+        <pre>
+          <code class="codeblock">
+        prod :: Int
+        prod = product $ take 20 [1..]
+          </code>
+        </pre>
       </section>
       <section>
         <a href="#funciones"><h1 id="funciones">Currying y funciones de mayor orden</h1></a>
@@ -103,10 +105,10 @@
         </p>
         <pre>
           <code class="codeblock">
-            def suma(x):
-                def f(y):
-                  return x+y
-                return f
+        def suma(x):
+            def f(y):
+              return x+y
+            return f
           </code>
         </pre>
         <p>
@@ -114,8 +116,8 @@
         </p>
         <pre>
           <code class="codeblock">
-            suma :: Int -> Int -> Int
-            suma x y = x+y
+        suma :: Int -> Int -> Int
+        suma x y = x+y
           </code>
         </pre>
         <p>
@@ -170,11 +172,11 @@
         </p>
         <pre>
           <code class="codeblock">
-            data Estacion
-                  = Invierno
-                  | Primavera
-                  | Verano
-                  | Otoño
+        data Estacion
+              = Invierno
+              | Primavera
+              | Verano
+              | Otoño
           </code>
         </pre>
         <p>
@@ -190,7 +192,7 @@
         </p>
         <pre>
           <code class="codeblock">
-            data Persona = Persona String Int
+        data Persona = Persona String Int
           </code>
         </pre>
         <h2>Newtype</h2>
@@ -205,7 +207,7 @@
         </p>
         <pre>
           <code class="codeblock">
-            newtype Matrix a = Matrix [[a]]
+        newtype Matrix a = Matrix [[a]]
           </code>
         </pre>
         <p>
